@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
+/** Example for this is "HomeViewModel.kt" */
 class HomeViewModel(
     private val categoryRepository: CategoryRepository = Graph.categoryRepository
 ) : ViewModel() {

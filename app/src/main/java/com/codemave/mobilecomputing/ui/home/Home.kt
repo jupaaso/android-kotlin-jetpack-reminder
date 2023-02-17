@@ -1,10 +1,7 @@
 package com.codemave.mobilecomputing.ui.home
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
+import android.app.Activity
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -25,15 +22,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.codemave.mobilecomputing.R
 import com.codemave.mobilecomputing.data.entity.Category
 import com.codemave.mobilecomputing.ui.home.categoryPayment.CategoryPayment
+import com.codemave.mobilecomputing.ui.home.categoryReminder.CategoryReminder
 import com.google.accompanist.insets.systemBarsPadding
 
+/** Calls HomeContent */
 @Composable
 fun Home(
     viewModel: HomeViewModel = viewModel(),
@@ -63,6 +64,86 @@ fun HomeContent(
     onCategorySelected: (Category) -> Unit,
     navController: NavController,
 ) {
+    val activity = (LocalContext.current as? Activity)
+    val appBarColor = MaterialTheme.colors.secondary.copy(alpha = 0.87f)
+
+    /**Scaffold(
+        modifier = Modifier.padding(bottom = 24.dp),
+        floatingActionButton = {
+            FloatingActionButton(           // Press button and open "payment"
+                onClick = { navController.navigate("reminder") },
+                modifier = Modifier.padding(all = 20.dp),
+                contentColor = Color.Black
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null
+                )
+            }
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .systemBarsPadding()
+                .fillMaxWidth()
+        )  {
+            TopAppBar(
+                title = {
+                    Text(
+                        text ="HW1",
+                        //text = stringResource("Mobicomp"),
+                        color = MaterialTheme.colors.primary,
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .heightIn(max = 24.dp)
+                    )
+                },
+                backgroundColor = appBarColor,
+
+                actions = {
+                    Spacer(modifier = Modifier.width(4.dp))  // EI VAIKUTA
+                    IconButton(onClick = {
+                        activity?.finish()
+                    }) {
+                        Text(
+                            text = "LOGOUT",
+                            color = Color.Red,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))  // EI VAIKUTA
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(
+                            imageVector = Icons.Filled.Search,
+                            contentDescription = "Search",
+                            modifier = Modifier
+                                .heightIn(20.dp)
+                        ) //stringResource("Search")) Ei vaikutusta koolla
+                    }
+                    IconButton(onClick = { navController.navigate("profile") }) {
+                        Icon(
+                            imageVector = Icons.Filled.AccountCircle,
+                            contentDescription = "Account", //stringResource("Account"))
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
+                } )
+
+            /** Prints categories on the screen, Code below */
+            CategoryTabs(
+                categories = categories,
+                selectedCategory = selectedCategory,
+                onCategorySelected = onCategorySelected
+            )
+
+            /** Prints reminder list on the screen, code on "ui->home->CategoryReminder.kt"*/
+            CategoryReminder(
+                categoryId = selectedCategory.id,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
+    } */
     Scaffold(
         modifier = Modifier.padding(bottom = 24.dp),
         floatingActionButton = {

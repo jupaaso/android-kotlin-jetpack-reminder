@@ -67,7 +67,8 @@ fun HomeContent(
     val activity = (LocalContext.current as? Activity)
     val appBarColor = MaterialTheme.colors.secondary.copy(alpha = 0.87f)
 
-    /**Scaffold(
+    /** REMINDER HOME SCREEN NEXT */
+    Scaffold(
         modifier = Modifier.padding(bottom = 24.dp),
         floatingActionButton = {
             FloatingActionButton(           // Press button and open "payment"
@@ -91,7 +92,7 @@ fun HomeContent(
                 title = {
                     Text(
                         text ="HW1",
-                        //text = stringResource("Mobicomp"),
+                        //text = stringResource("HW2"),
                         color = MaterialTheme.colors.primary,
                         modifier = Modifier
                             .padding(start = 4.dp)
@@ -143,8 +144,8 @@ fun HomeContent(
             )
         }
     }
-    } */
-    Scaffold(
+}
+    /**Scaffold(
         modifier = Modifier.padding(bottom = 24.dp),
         floatingActionButton = {
             FloatingActionButton(
@@ -182,8 +183,8 @@ fun HomeContent(
             )
         }
     }
-}
-
+} */
+/**
 @Composable
 private fun HomeAppBar(
     backgroundColor: Color
@@ -209,7 +210,7 @@ private fun HomeAppBar(
         }
     )
 }
-
+*/
 @Composable
 private fun CategoryTabs(
     categories: List<Category>,

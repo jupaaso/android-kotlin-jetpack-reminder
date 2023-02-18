@@ -57,8 +57,8 @@ class HomeViewModel(
             Category(name = "Investment"),
             Category(name = "Travel"),
             Category(name = "Fuel"),
-            Category(name = "Repairs"),
-            Category(name = "Coffee")
+            Category(name = "Repairs")
+            //Category(name = "Coffee")
         )
         viewModelScope.launch {
             list.forEach { category -> categoryRepository.addCategory(category) }

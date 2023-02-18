@@ -24,7 +24,8 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 import java.util.*
 
-/** fun presents the Reminder input screen */
+/** fun presents the Reminder input screen
+ * AND saves new reminder content */
 /** ESIKUVA Payment function on 006-exercise */
 
 @Composable
@@ -123,7 +124,7 @@ fun Reminder(
                                     reminderMessage = message.value,
                                     //reminderLocationX = 63.56,
                                     //reminderLocationY = 55.90,
-                                    reminderDateTime = doDate.value.toLong(),
+                                    reminderDateTime = doDate.value, //.toLong(),
                                     //reminderCreationDateTime = Date().time,
                                     //reminderCreatorId = 1,
                                     //reminderSeenDateTime = Date().time,

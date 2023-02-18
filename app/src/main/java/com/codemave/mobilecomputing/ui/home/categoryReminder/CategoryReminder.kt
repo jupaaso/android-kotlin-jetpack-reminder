@@ -111,7 +111,7 @@ private fun ReminderListItem(
                 else -> 0
             }, */
         Text(
-            text = reminder.reminderDateTime.toDateString(),  // Long vaatimuksena !!!!
+            text = reminder.reminderDateTime, //.toDateString(),  // Long vaatimuksena !!!!
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.caption,

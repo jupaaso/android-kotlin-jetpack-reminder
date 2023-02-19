@@ -21,6 +21,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.codemave.mobilecomputing.data.entity.Category
 import com.codemave.mobilecomputing.data.entity.Reminder
 import com.codemave.mobilecomputing.data.room.ReminderToCategory
+import com.codemave.mobilecomputing.ui.reminder.CurrentDateTime
 import com.codemave.mobilecomputing.util.viewModelProviderFactoryOf
 import java.text.SimpleDateFormat
 import java.util.*
@@ -65,7 +66,7 @@ private fun ReminderList(
         }
     }
 }
-// PaymentList Item shown in constraintLayout form
+/** PaymentList Item shown in constraintLayout form */
 @Composable
 private fun ReminderListItem(
     reminder: Reminder,
@@ -111,7 +112,8 @@ private fun ReminderListItem(
                 else -> 0
             }, */
         Text(
-            text = reminder.reminderDateTime, //.toDateString(),  // Long vaatimuksena !!!!
+            //text = SimpleDateFormat("yyyy-MM-dd").format(reminder.reminderDateTime),
+            text = reminder.reminderDateTime,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.caption,

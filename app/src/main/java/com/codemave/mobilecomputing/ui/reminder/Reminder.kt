@@ -1,5 +1,6 @@
 package com.codemave.mobilecomputing.ui.reminder
 
+import android.icu.util.UniversalTimeScale.toLong
 import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -18,10 +19,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.room.TypeConverter
 import com.codemave.mobilecomputing.data.entity.Category
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.sql.Date
+import java.time.LocalDate
 import java.util.*
 
 /** fun presents the Reminder input screen
@@ -58,6 +63,7 @@ fun Reminder(
                 .fillMaxSize()
                 .systemBarsPadding()
         ) {
+            /** TOP BAR */
             TopAppBar {
                 IconButton( onClick = onBackPress ) {
                     Icon(
@@ -73,6 +79,7 @@ fun Reminder(
                 verticalArrangement = Arrangement.Top,
                 modifier = Modifier.padding(16.dp)
             ) {
+                /** MESSAGE */
                 OutlinedTextField(
                     value = message.value,
                     onValueChange = { message.value = it },
@@ -85,11 +92,12 @@ fun Reminder(
                     category = category
                 )
                 Spacer(modifier = Modifier.height(10.dp))
+                /** REMINDER DATE no time */
                 Row(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
                         value = doDate.value,
                         onValueChange = { doDate.value = it },
-                        label = { Text(text = "Do date")},
+                        label = { Text(text = "Do date") },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number
                         ),
@@ -115,19 +123,47 @@ fun Reminder(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Spacer(modifier = Modifier.height(10.dp))
+                /** BUTTON TO SAVE GIVEN INFORMATION */
                 Button(
                     enabled = true,
                     onClick = {
+                        // on below line we are creating and initializing
+                        // variable for simple date format.
+                        val formatedDate = SimpleDateFormat("yyyy-MM-dd").format(Date()) //"2023-02-29"
+                        val formatedTime = SimpleDateFormat("HH:mm").format(Date())  // "21:52"
+                        val DateTime = "$formatedDate $formatedTime"  // "2023-02-19 21:52"
+                        // on below line we are creating a variable for
+                        // current date and time and calling a simple
+                        // date format in it.
+                        //val currentDateTime = sdf.format(Date())
+
+                        val givenDate = Date() // "Mon Feb 20 00:00:29 GMT+02:00 2023
+
+                        creationDateTime.value = doDate.value //formatedDate
+                        seenDateTime.value = doDate.value // formatedDate
+
+                        //val givenDateLong = dateToTimestamp(givenDate)
+                        //givenDateLong = dateToTimestamp(Date())
+
+                        System.out.println("message.value: " + message.value)
+                        System.out.println("doDate.value: " + doDate.value)
+                        System.out.println("doDate: " + doDate)  // MutableState(value=2023-01-01)@267916237
+                        System.out.println("Date().toString(): " + Date().toString()) // "Sun Feb 19 21:56:31 GMT+02:00 2023"
+                        System.out.println("categoryId: " + category.value)
+                        System.out.println("formatedDate: " + formatedDate) // "2023-02-29"
+                        System.out.println("seenDateTime.value: " + seenDateTime.value) // "2023-02-29"
+                        System.out.println("getCategoryId: " + getCategoryId(viewState.categories, category.value))
+
                         coroutineScope.launch {
                             viewModel.saveReminder(
                                 com.codemave.mobilecomputing.data.entity.Reminder(
                                     reminderMessage = message.value,
                                     //reminderLocationX = 63.56,
                                     //reminderLocationY = 55.90,
-                                    reminderDateTime = doDate.value, //.toLong(),
-                                    //reminderCreationDateTime = Date().time,
+                                    reminderDateTime = doDate.value,
+                                    reminderCreationDateTime = creationDateTime.value, //creationDateTime.value,
                                     //reminderCreatorId = 1,
-                                    //reminderSeenDateTime = Date().time,
+                                    reminderSeenDateTime = seenDateTime.value, //seenDateTime.value,
                                     reminderCategoryId = getCategoryId(viewState.categories, category.value)
                                 )
                             )
@@ -194,4 +230,14 @@ private fun CategoryListDropdown(
             }
         }
     }
+}
+
+@TypeConverter
+private fun fromTimestamp(value: Long?): Date? {
+    return value?.let { Date(it) }
+}
+
+@TypeConverter
+private fun dateToTimestamp(date: Date?): Long? {
+    return date?.time?.toLong()
 }

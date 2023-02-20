@@ -1,7 +1,10 @@
 package com.codemave.mobilecomputing.ui.reminder
 
+import android.content.Context
 import android.icu.util.UniversalTimeScale.toLong
 import android.os.Build
+import android.content.SharedPreferences
+import android.provider.Settings.Global.getString
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -49,14 +53,16 @@ fun Reminder(
     val creatorId = rememberSaveable { mutableStateOf( "") }
     val seenDateTime = rememberSaveable { mutableStateOf( "") }
 
-
     val latlng = navController
         .currentBackStackEntry
         ?.savedStateHandle
         ?.getLiveData<LatLng>("location_data")
         ?.value
 
+    val context = LocalContext.current
+    var sharedPreferences: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
+    //
     Surface {
         Column(
             modifier = Modifier
@@ -129,19 +135,25 @@ fun Reminder(
                     onClick = {
                         // on below line we are creating and initializing
                         // variable for simple date format.
-                        val formatedDate = SimpleDateFormat("yyyy-MM-dd").format(Date()) //"2023-02-29"
+                        val formatedDate = SimpleDateFormat("yyyy-MM-dd").format(Date()) //"2023-02-19"
                         val formatedTime = SimpleDateFormat("HH:mm").format(Date())  // "21:52"
                         val DateTime = "$formatedDate $formatedTime"  // "2023-02-19 21:52"
+                        val givenDate = Date() // "Mon Feb 20 00:00:29 GMT+02:00 2023
                         // on below line we are creating a variable for
                         // current date and time and calling a simple
                         // date format in it.
                         //val currentDateTime = sdf.format(Date())
 
-                        val givenDate = Date() // "Mon Feb 20 00:00:29 GMT+02:00 2023
+                        /** Data for database */
+                        creationDateTime.value = formatedDate // doDate.value //formatedDate
+                        seenDateTime.value = formatedDate // formatedDate
+                        creatorId.value = "juha"
 
-                        creationDateTime.value = doDate.value //formatedDate
-                        seenDateTime.value = doDate.value // formatedDate
+                        // Username for creatorId string
+                        val userString = sharedPreferences.getString("USERNAME_KEY", "")
+                        creatorId.value = userString.toString()
 
+                        //seenDateTime.value = doDate.value // formatedDate
                         //val givenDateLong = dateToTimestamp(givenDate)
                         //givenDateLong = dateToTimestamp(Date())
 
@@ -153,6 +165,7 @@ fun Reminder(
                         System.out.println("formatedDate: " + formatedDate) // "2023-02-29"
                         System.out.println("seenDateTime.value: " + seenDateTime.value) // "2023-02-29"
                         System.out.println("getCategoryId: " + getCategoryId(viewState.categories, category.value))
+                        System.out.println("creatorId: " + creatorId.value)
 
                         coroutineScope.launch {
                             viewModel.saveReminder(
@@ -162,7 +175,7 @@ fun Reminder(
                                     //reminderLocationY = 55.90,
                                     reminderDateTime = doDate.value,
                                     reminderCreationDateTime = creationDateTime.value, //creationDateTime.value,
-                                    //reminderCreatorId = 1,
+                                    reminderCreatorId = creatorId.value,
                                     reminderSeenDateTime = seenDateTime.value, //seenDateTime.value,
                                     reminderCategoryId = getCategoryId(viewState.categories, category.value)
                                 )

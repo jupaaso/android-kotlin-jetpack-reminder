@@ -30,7 +30,7 @@ data class Reminder(
     //@ColumnInfo(name = "reminder_location_y") val reminderLocationY: Double,
     @ColumnInfo(name = "reminder_datetime") val reminderDateTime: String,
     @ColumnInfo(name = "reminder_creation_datetime") val reminderCreationDateTime: String,
-    //@ColumnInfo(name = "reminder_creator_id") val reminderCreatorId: Long,
+    @ColumnInfo(name = "reminder_creator_id") val reminderCreatorId: String,
     @ColumnInfo(name = "reminder_seen_datetime") val reminderSeenDateTime: String
     //@Ignore var picture: Bitmap?  EI TOIMI
 )

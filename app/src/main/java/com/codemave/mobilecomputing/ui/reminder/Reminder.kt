@@ -123,6 +123,8 @@ fun Reminder(
                         Text(
                             text = "Lat: ${latlng.latitude}, \nLng: ${latlng.longitude}"
                         )
+                        System.out.println("latlng.latitude" + latlng.latitude)
+                        System.out.println("latlng.longitude" + latlng.longitude)
                     }
                 }
 

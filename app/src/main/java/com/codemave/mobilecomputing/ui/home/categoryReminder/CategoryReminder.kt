@@ -66,7 +66,7 @@ private fun ReminderList(
         }
     }
 }
-/** PaymentList Item shown in constraintLayout form */
+/** ReminderList Item printed/shown in constraintLayout form */
 @Composable
 private fun ReminderListItem(
     reminder: Reminder,

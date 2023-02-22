@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt' // needed for room to work
+    //id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -97,6 +98,6 @@ dependencies {
     // Maps dependencies
     implementation 'com.google.maps.android:maps-ktx:3.3.0'
     implementation 'com.google.maps.android:maps-utils-ktx:3.3.0'
-    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.maps.android:android-maps-utils:2.2.3'
 }

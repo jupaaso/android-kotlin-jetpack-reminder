@@ -49,15 +49,15 @@ class HomeViewModel(
 
     private fun loadCategoriesFromDb() {
         val list = mutableListOf(
-            Category(name = "Food"),
-            Category(name = "Health"),
+            Category(name = "Time based"),
+            Category(name = "Location based"),
             Category(name = "Savings"),
             Category(name = "Drinks"),
             Category(name = "Clothing"),
             Category(name = "Investment"),
-            Category(name = "Travel"),
-            Category(name = "Fuel"),
-            Category(name = "Repairs")
+            //Category(name = "Travel"),
+            //Category(name = "Fuel"),
+            //Category(name = "Repairs")
             //Category(name = "Coffee")
         )
         viewModelScope.launch {

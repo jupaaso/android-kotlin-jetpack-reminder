@@ -1,25 +1,15 @@
 package com.codemave.mobilecomputing.ui.home
 
 import android.app.Activity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.Surface
-import androidx.compose.material.Tab
-import androidx.compose.material.TabPosition
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -65,21 +55,59 @@ fun HomeContent(
     navController: NavController,
 ) {
     val activity = (LocalContext.current as? Activity)
+    //val appBarColor = MaterialTheme.colors.primary.green
     val appBarColor = MaterialTheme.colors.secondary.copy(alpha = 0.87f)
 
+    var editMode by remember { mutableStateOf(false) }  // EDITMODE
+
     /** REMINDER HOME SCREEN NEXT */
+    /** "Edit" and "+" buttons first */
     Scaffold(
         modifier = Modifier.padding(bottom = 24.dp),
         floatingActionButton = {
-            FloatingActionButton(           // Press button and open "payment"
-                onClick = { navController.navigate("reminder") },
-                modifier = Modifier.padding(all = 20.dp),
-                contentColor = Color.Black
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
+            val title = if (editMode) "Cancel" else "Edit"
+            Column() {
+                Row(Modifier.padding(16.dp)) {
+                    OutlinedButton(
+                        onClick = {
+                            editMode = !editMode
+                        },
+                        modifier = Modifier
+                            .height(50.dp),
+                        enabled = true,
+                        shape = RoundedCornerShape(size = 50.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
+                    ) {
+                        Text(text = title)
+                    }
+
+                    Spacer(modifier = Modifier.width(20.dp))  //
+
+                    /** Press button and open "Reminder" */
+                    ExtendedFloatingActionButton(
+                        onClick = { navController.navigate("reminder") },
+                        modifier = Modifier.padding(all = 20.dp),
+                        backgroundColor = Color.Green,
+                        contentColor = Color.Black,
+                        text = { Text(text = "Add") },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
+                        } )
+
+                    /** FloatingActionButton(           // Press button and open "payment"
+                        onClick = { navController.navigate("reminder") },
+                        modifier = Modifier.padding(all = 20.dp),
+                        backgroundColor = Color.Green,
+                        contentColor = Color.Black,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .height(50.dp)
+                        )
+                    } */
+                }
             }
         }
     ) {
@@ -91,18 +119,20 @@ fun HomeContent(
             TopAppBar(
                 title = {
                     Text(
-                        text ="HW1",
+                        text ="HW2",
                         //text = stringResource("HW2"),
-                        color = MaterialTheme.colors.primary,
+                        //color = MaterialTheme.colors.primary, // Tekee virhean tekstin
+                        //color = MaterialTheme.colors.secondary,
                         modifier = Modifier
-                            .padding(start = 4.dp)
+                            .padding(start = 10.dp)
                             .heightIn(max = 24.dp)
                     )
                 },
-                backgroundColor = appBarColor,
+                //backgroundColor = appBarColor,
+                  backgroundColor = MaterialTheme.colors.primary,
 
                 actions = {
-                    Spacer(modifier = Modifier.width(4.dp))  // EI VAIKUTA
+                    //Spacer(modifier = Modifier.width(4.dp))  // EI VAIKUTA
                     IconButton(onClick = {
                         activity?.finish()
                     }) {
@@ -113,14 +143,19 @@ fun HomeContent(
                         )
                         Spacer(modifier = Modifier.width(10.dp))  // EI VAIKUTA
                     }
+                    Spacer(modifier = Modifier.width(40.dp))  // VAIKUTTAAKO
+
                     IconButton(onClick = {}) {
                         Icon(
                             imageVector = Icons.Filled.Search,
                             contentDescription = "Search",
                             modifier = Modifier
-                                .heightIn(20.dp)
+                                .heightIn(50.dp)
+                                .size(50.dp)
                         ) //stringResource("Search")) Ei vaikutusta koolla
                     }
+                    Spacer(modifier = Modifier.width(20.dp))  // to right size of Profile icon
+
                     IconButton(onClick = { navController.navigate("profile") }) {
                         Icon(
                             imageVector = Icons.Filled.AccountCircle,
@@ -128,6 +163,7 @@ fun HomeContent(
                             modifier = Modifier.size(50.dp)
                         )
                     }
+                    Spacer(modifier = Modifier.width(10.dp))  // to right size of Profile icon
                 } )
 
             /** Prints categories on the screen, Code below */
@@ -211,6 +247,7 @@ private fun HomeAppBar(
     )
 }
 */
+/** Prints scrollable categories below TopAppBar */
 @Composable
 private fun CategoryTabs(
     categories: List<Category>,

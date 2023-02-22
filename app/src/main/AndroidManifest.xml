@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".MobileComputingApplication"
@@ -12,7 +13,7 @@
         android:theme="@style/Theme.MobileComputing">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBqe8SYllHrScef4hxG7UWRi5v4KkObrfY" />
+            android:value="  get  API_KEY from ANDY  " />
 
         <activity
             android:name=".ui.MainActivity"

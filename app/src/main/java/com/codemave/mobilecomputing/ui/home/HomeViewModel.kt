@@ -51,10 +51,10 @@ class HomeViewModel(
         val list = mutableListOf(
             Category(name = "Time based"),
             Category(name = "Location based"),
-            Category(name = "Savings"),
-            Category(name = "Drinks"),
-            Category(name = "Clothing"),
-            Category(name = "Investment"),
+            Category(name = "Spare 3"),
+            Category(name = "Spare 4"),
+            Category(name = "Spare 5"),
+            Category(name = "Spare 6"),
             //Category(name = "Travel"),
             //Category(name = "Fuel"),
             //Category(name = "Repairs")

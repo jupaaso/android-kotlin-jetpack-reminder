@@ -21,8 +21,15 @@ class ReminderViewModel(
     val state: StateFlow<ReminderViewState>
         get() = _state
 
+    /** save, remove and edit functions f */
     suspend fun saveReminder(reminder: Reminder): Long {
         return reminderRepository.addReminder(reminder)
+    }
+    suspend fun removeReminder(reminder: Reminder): Int {
+        return reminderRepository.deleteReminder(reminder)
+    }
+    suspend fun editReminder(reminder: Reminder) {
+        return reminderRepository.updateReminder(reminder)
     }
 
     init {

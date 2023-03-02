@@ -21,9 +21,18 @@ class ReminderRepository(
     }
 
     /**
-     * Add a new [Reminder] to the payment store
+     * Add a new [Reminder] to the reminder database
      */
     suspend fun addReminder(reminder: Reminder) = reminderDao.insert(reminder)
 
+    /**
+     * Delete a selected [Reminder] from the reminder database
+     */
+    suspend fun deleteReminder(reminder: Reminder) = reminderDao.delete(reminder)
+
+    /**
+     * Update/Edit an existing [Reminder] in the reminder database
+     */
+    suspend fun updateReminder(reminder: Reminder) = reminderDao.update(reminder)
 }
 

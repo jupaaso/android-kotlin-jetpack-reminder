@@ -37,7 +37,10 @@ object Graph {
 
     fun provide(context: Context) {
         appContext = context
-        database = Room.databaseBuilder(context, MobileComputingDatabase::class.java, "mcData.db")
+        database = Room.databaseBuilder(
+            context,
+            MobileComputingDatabase::class.java,
+            "mcData.db")
             .fallbackToDestructiveMigration() // don't use this in production app
             .build()
     }

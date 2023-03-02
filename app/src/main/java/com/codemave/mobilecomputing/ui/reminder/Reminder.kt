@@ -33,8 +33,8 @@ import java.sql.Date
 import java.time.LocalDate
 import java.util.*
 
-/** fun presents the Reminder input screen
- * AND saves new reminder content */
+/** fun presents the one-single-Reminder input screen
+ * AND at the end saves new reminder content */
 /** ESIKUVA Payment function on 006-exercise */
 
 @Composable

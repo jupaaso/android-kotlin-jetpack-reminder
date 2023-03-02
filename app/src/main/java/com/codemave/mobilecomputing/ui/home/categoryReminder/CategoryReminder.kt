@@ -5,13 +5,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.filled.CheckBox
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -27,7 +29,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.List
 
-/** Reminder on home page */
+/** Reminder on home page
+ * This prints the list items */
 @Composable
 fun CategoryReminder(
     categoryId: Long,               // Category related
@@ -60,7 +63,7 @@ private fun ReminderList(
             ReminderListItem(
                 reminder = item.reminder,
                 category = item.category,
-                onClick = { /*TODO*/ },
+                onClick = { /*editMode*/ /*TODO*/ },
                 modifier = Modifier.fillParentMaxWidth()
             )
         }
@@ -77,6 +80,7 @@ private fun ReminderListItem(
     // clickable means that the whole payment item line is clickable in list
     ConstraintLayout(modifier = modifier.clickable { onClick() }) {
         val (divider, reminderMessage, reminderDateTime, reminderCategory, icon, date) = createRefs()
+        var checked by remember { mutableStateOf(false) }
         Divider(
             Modifier.constrainAs(divider) {
                 top.linkTo(parent.top)
@@ -92,7 +96,7 @@ private fun ReminderListItem(
             style = MaterialTheme.typography.subtitle1,
             modifier = Modifier.constrainAs(reminderMessage) {
                 linkTo(
-                    start = parent.start,
+                    start = divider.start,
                     end = icon.start,    // ARVAUSHEITETTY
                     startMargin = 24.dp,
                     endMargin = 16.dp,
@@ -119,16 +123,17 @@ private fun ReminderListItem(
             style = MaterialTheme.typography.caption,
             modifier = Modifier.constrainAs(reminderDateTime) {
                 linkTo(
-                    start = parent.start,
+                    start = reminderMessage.start, //parent.start,
                     end = icon.start,
-                    //startMargin = 8.dp,
-                    //endMargin = 16.dp,
-                    //bias = 0f // float this towards the start. this was is the fix we needed
+                    startMargin = 0.dp,
+                    endMargin = 16.dp,
+                    bias = 0f // float this towards the start. this was is the fix we needed
                     //)
                 )
                 //centerVerticallyTo(reminderTitle)
                 top.linkTo(reminderMessage.bottom, 6.dp)
-                bottom.linkTo (parent.bottom, 10.dp)
+                //bottom.linkTo (parent.bottom, 10.dp)
+                width = Dimension.preferredWrapContent
             }
         )
 
@@ -150,10 +155,26 @@ private fun ReminderListItem(
                 width = Dimension.preferredWrapContent
             }
         )
+        /** CHECKBOX at the end of line */
+        Checkbox(
+            checked = checked,
+            onCheckedChange = { checked = !checked },
+            modifier = Modifier
+                .size(50.dp)
+                .padding(6.dp)
+                .constrainAs(icon) {
+                    top.linkTo(parent.top, 10.dp)
+                    bottom.linkTo(parent.bottom, 10.dp)
+                    end.linkTo(parent.end)
+                }
+        )
 
-        /** CHECKED ICON */
-        IconButton(
-            onClick = { /*TODO*/ },
+        /** CHECKED ICON tama ei toiminut checkboxina */
+
+        /**IconButton(
+            onClick = {
+                checked = !checked,
+            },
             modifier = Modifier
                 .size(50.dp)
                 .padding(6.dp)
@@ -164,10 +185,10 @@ private fun ReminderListItem(
                 }
         ) {
             Icon(
-                imageVector = Icons.Filled.Check,
+                imageVector = Icons.Filled.CheckBox,
                 contentDescription = "Check"
             )
-        }
+        } */
 
     }
 }

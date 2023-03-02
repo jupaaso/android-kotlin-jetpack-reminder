@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -58,10 +59,11 @@ fun HomeContent(
     //val appBarColor = MaterialTheme.colors.primary.green
     val appBarColor = MaterialTheme.colors.secondary.copy(alpha = 0.87f)
 
-    var editMode by remember { mutableStateOf(false) }  // EDITMODE
+    var editMode by remember { mutableStateOf(false) }  // EDITMODE reminder
+    var deleteMode by remember { mutableStateOf(false) } // DELETEMODE reminder
 
     /** REMINDER HOME SCREEN NEXT */
-    /** "Edit" and "+" buttons first */
+    /** "Edit" and "+Add" buttons first */
     Scaffold(
         modifier = Modifier.padding(bottom = 24.dp),
         floatingActionButton = {
@@ -78,15 +80,23 @@ fun HomeContent(
                         shape = RoundedCornerShape(size = 50.dp),
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
                     ) {
-                        Text(text = title)
+                        Text(text = title)  // Button text is "Edit" or "Cancel"
                     }
 
-                    Spacer(modifier = Modifier.width(20.dp))  //
+                    if (editMode) {
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                imageVector = Icons.Filled.Delete,
+                                contentDescription = "Delete", //stringResource("Account"))
+                                modifier = Modifier.size(24.dp)
+                            )}
+                    }
+                    Spacer(modifier = Modifier.width(70.dp))  // hori-space between buttons
 
                     /** Press button and open "Reminder" */
                     ExtendedFloatingActionButton(
                         onClick = { navController.navigate("reminder") },
-                        modifier = Modifier.padding(all = 20.dp),
+                        modifier = Modifier.padding(all = 0.dp), // vertical space between buttons
                         backgroundColor = Color.Green,
                         contentColor = Color.Black,
                         text = { Text(text = "Add") },
